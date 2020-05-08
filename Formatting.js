@@ -108,11 +108,11 @@ module.exports.formatting = (i) => {
   const weapon7rof = Math.round(60 * i.Weapon7ShotsPerSalvo / ((i.Weapon7ShotsPerSalvo - 1) * i.Weapon7TimeBetweenShots - -i.Weapon7TimeBetweenSalvos));
   const weapon8rof = Math.round(60 * i.Weapon8ShotsPerSalvo / ((i.Weapon8ShotsPerSalvo - 1) * i.Weapon8TimeBetweenShots - -i.Weapon8TimeBetweenSalvos));
 
-  let rookieavail = ('<:unvet1:583396237936427039>' + i.RookieDeployableAmount + '   ');
-  let trainedavail = ('<:unvet2:583396237655670825>' + i.TrainedDeployableAmount + '   ');
-  let hardenedavail = ('<:unvet3:583396237626048517>' + i.HardenedDeployableAmount + '   ');
-  let veteranavail = ('<:unvet4:583396237550813229>' + i.VeteranDeployableAmount + '   ');
-  let eliteavail = ('<:unvet5:583396237601013779>' + i.EliteDeployableAmount + '   ');
+  let rookieavail = ('<:신병:583396237936427039>' + i.RookieDeployableAmount + '   ');
+  let trainedavail = ('<:기간병:583396237655670825>' + i.TrainedDeployableAmount + '   ');
+  let hardenedavail = ('<:숙련병:583396237626048517>' + i.HardenedDeployableAmount + '   ');
+  let veteranavail = ('<:정예병:583396237550813229>' + i.VeteranDeployableAmount + '   ');
+  let eliteavail = ('<:최정예병:583396237601013779>' + i.EliteDeployableAmount + '   ');
 
 
   const redfor = {
@@ -120,12 +120,16 @@ module.exports.formatting = (i) => {
 
     "Poland": ":flag_pl:",
     'Czechoslavakia': ':flag_cz:',
-    'Soviet Union': '<:flag_sr:581691631523069952>',
+    // 'Soviet Union': '<:flag_sr:581691631523069952>',
+    'Soviet Union': '<:soviet:702534061356482680>',
+    //유고슬라비아, 동독 이모티콘 없음
     'Yugoslavia': '<:emote:581895502568620110>',
     'Finland': ':flag_fi:',
     'East Germany': '<:unknown:581897376000638996>',
     'China': ':flag_cn:',
-    'North Korea': '<:download:581897628959375372>',
+    // 'North Korea': '<:download:581897628959375372>',
+    'North Korea': ':flag_kp:',
+
 
   };
 
@@ -148,21 +152,21 @@ module.exports.formatting = (i) => {
   };
 
   const stealth = {
-    '1': 'Poor',
-    '1.25': 'Poor - Medium',
-    '1.5': 'Medium',
-    '2': 'Good',
-    '2.5': 'Very good',
-    '3': 'Exceptional',
+    '1': '매우 나쁨',
+    '1.25': '나쁨',
+    '1.5': '보통',
+    '2': '좋음',
+    '2.5': '매우 좋음',
+    '3': '탁월함',
   };
 
   const groundOptics = {
-    '40': 'Bad',
-    '60': 'Poor',
-    '80': 'Medium',
-    '120': 'Good',
-    '170': 'Very Good',
-    '220': 'Exceptional',
+    '40': '매우 나쁨',
+    '60': '나쁨',
+    '80': '보통',
+    '120': '좋음',
+    '170': '매우 좋음',
+    '220': '탁월함',
   };
 
 
@@ -254,25 +258,25 @@ module.exports.formatting = (i) => {
   }
 
   if (i.IsPrototype.toLowerCase() === 'false') {
-    proto = '**Not prototype**';
+    proto = '**프로토타입 아님**';
   } else if (i.IsPrototype.toLowerCase() === 'true') {
-    proto = '**Prototype**';
+    proto = '**프토로타입**';
   }
 
   if (i.RookieDeployableAmount !== '0') {
-    rookieavail = ('<:vet1:583396237936689155> **' + i.RookieDeployableAmount + '**   ');
+    rookieavail = ('<:신병:583396237936689155> **' + i.RookieDeployableAmount + '**   ');
   };
   if (i.TrainedDeployableAmount !== '0') {
-    trainedavail = ('<:vet2:583396237735362593> **' + i.TrainedDeployableAmount + '**   ');
+    trainedavail = ('<:기간병:583396237735362593> **' + i.TrainedDeployableAmount + '**   ');
   };
   if (i.HardenedDeployableAmount !== '0') {
-    hardenedavail = ('<:vet3:583396237890551808> **' + i.HardenedDeployableAmount + '**   ');
+    hardenedavail = ('<:숙련병:583396237890551808> **' + i.HardenedDeployableAmount + '**   ');
   };
   if (i.VeteranDeployableAmount !== '0') {
-    veteranavail = ('<:vet4:583396237873643529> **' + i.VeteranDeployableAmount + '**   ');
+    veteranavail = ('<:정예병:583396237873643529> **' + i.VeteranDeployableAmount + '**   ');
   };
   if (i.EliteDeployableAmount !== '0') {
-    eliteavail = ('<:vet5:583396238053867558> **' + i.EliteDeployableAmount + '**   ');
+    eliteavail = ('<:최정예병:583396238053867558> **' + i.EliteDeployableAmount + '**   ');
   };
 
   // the dude that made the final data csv bungled the helo range for autocannons
@@ -299,33 +303,33 @@ module.exports.formatting = (i) => {
 
   let availability = (rookieavail + trainedavail + hardenedavail + veteranavail + eliteavail);
 
-  let accuracy = (+' | **Accuracy**: ' + Math.trunc(i.Weapon1HitProbability * 100) + '%');
+  let accuracy = (+' | **명중률**: ' + Math.trunc(i.Weapon1HitProbability * 100) + '%');
 
   if (i.Weapon1HitProbability === '') {
     accuracy = '';
   };
 
-  let description = ('**Price**: ' + i.Price + ' | **Armor: ** Front: ' + armorfront + ' | Sides: ' + armorsides + ' | Rear: ' + armorrear + ' | Top: ' + armortop);
+  let description = ('**가격**: ' + i.Price + ' | **장갑: ** 전면: ' + armorfront + ' | 측면: ' + armorsides + ' | 후면: ' + armorrear + ' | 상면: ' + armortop);
 
-  let category = ('**Logistics** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+  let category = ('**기본 정보** | **국가**: ' + i.MotherCountry + ' | ' + proto);
 
-  let movement = ('**Movement**', '**Type**: ' + i.MovementType + ' | **Speed**: ' + Math.trunc(i.MaxSpeed) + 'kph | **Stealth**: ' + i.Stealth + ' \n **Ground optics**: ' + i.OpticalStrengthGround);
+  let movement = ('**이동**', '**종류**: ' + i.MovementType + ' | **속도**: ' + Math.trunc(i.MaxSpeed) + 'kph | **스텔스**: ' + i.Stealth + ' \n **지상 관측**: ' + i.OpticalStrengthGround);
 
-  let weapon1 = ('**Weapon 1**: ' + i.Weapon1Name + ', ' + i.Weapon1Caliber + ' x' + Math.trunc(i.Weapon1DisplayedAmmunition) + ', ** ' + i.Weapon1Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon1RangeGround) + ' - ' + Math.trunc(i.Weapon1RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon1RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon1RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon1DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon1DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon1AP + ' | **HE Power**: ' + weapon1round + ' | **Salvo**: ' + Math.trunc(i.Weapon1ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon1SupplyCost) + ' per salvo | **ROF**: ' + weapon1rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon1HitProbability * 100) + '%');
+  let weapon1 = ('**무기 1**: ' + i.Weapon1Name + ', ' + i.Weapon1Caliber + ' x' + Math.trunc(i.Weapon1DisplayedAmmunition) + ', ** ' + i.Weapon1Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon1RangeGround) + ' - ' + Math.trunc(i.Weapon1RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon1RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon1RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon1DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon1DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon1AP + ' | **HE(고폭)**: ' + weapon1round + ' | **살보**: ' + Math.trunc(i.Weapon1ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon1SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon1rof + ' | **명중률**: ' + Math.trunc(i.Weapon1HitProbability * 100) + '%');
 
-  let weapon2 = ('**Weapon 2**: ' + i.Weapon2Name + ', ' + i.Weapon2Caliber + ' x' + Math.trunc(i.Weapon2DisplayedAmmunition) + ', ** ' + i.Weapon2Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon2RangeGround) + ' - ' + Math.trunc(i.Weapon2RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon2RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon2RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon2DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon2DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon2AP + ' | **HE Power**: ' + weapon2round + ' | **Salvo**: ' + Math.trunc(i.Weapon2ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon2SupplyCost) + ' per salvo | **ROF**: ' + weapon2rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon2HitProbability * 100) + '%');
+  let weapon2 = ('**무기 2**: ' + i.Weapon2Name + ', ' + i.Weapon2Caliber + ' x' + Math.trunc(i.Weapon2DisplayedAmmunition) + ', ** ' + i.Weapon2Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon2RangeGround) + ' - ' + Math.trunc(i.Weapon2RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon2RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon2RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon2DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon2DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon2AP + ' | **HE(고폭)**: ' + weapon2round + ' | **살보**: ' + Math.trunc(i.Weapon2ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon2SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon2rof + ' | **명중률**: ' + Math.trunc(i.Weapon2HitProbability * 100) + '%');
 
-  let weapon3 = ('**Weapon 3**: ' + i.Weapon3Name + ', ' + i.Weapon3Caliber + ' x' + Math.trunc(i.Weapon3DisplayedAmmunition) + ', ** ' + i.Weapon3Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon3RangeGround) + ' - ' + Math.trunc(i.Weapon3RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon3RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon3RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon3DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon3DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon3AP + ' | **HE Power**: ' + weapon3round + ' | **Salvo**: ' + Math.trunc(i.Weapon3ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon3SupplyCost) + ' per salvo | **ROF**: ' + weapon3rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon3HitProbability * 100) + '%');
+  let weapon3 = ('**무기 3**: ' + i.Weapon3Name + ', ' + i.Weapon3Caliber + ' x' + Math.trunc(i.Weapon3DisplayedAmmunition) + ', ** ' + i.Weapon3Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon3RangeGround) + ' - ' + Math.trunc(i.Weapon3RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon3RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon3RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon3DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon3DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon3AP + ' | **HE(고폭)**: ' + weapon3round + ' | **살보**: ' + Math.trunc(i.Weapon3ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon3SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon3rof + ' | **명중률**: ' + Math.trunc(i.Weapon3HitProbability * 100) + '%');
 
-  let weapon4 = ('**Weapon 4**: ' + i.Weapon4Name + ', ' + i.Weapon4Caliber + ' x' + Math.trunc(i.Weapon4DisplayedAmmunition) + ', ** ' + i.Weapon4Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon4RangeGround) + ' - ' + Math.trunc(i.Weapon4RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon4RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon4RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon4DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon4DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon4AP + ' | **HE Power**: ' + weapon4round + ' | **Salvo**: ' + Math.trunc(i.Weapon4ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon4SupplyCost) + ' per salvo | **ROF**: ' + weapon4rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon4HitProbability * 100) + '%');
+  let weapon4 = ('**무기 4**: ' + i.Weapon4Name + ', ' + i.Weapon4Caliber + ' x' + Math.trunc(i.Weapon4DisplayedAmmunition) + ', ** ' + i.Weapon4Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon4RangeGround) + ' - ' + Math.trunc(i.Weapon4RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon4RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon4RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon4DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon4DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon4AP + ' | **HE(고폭)**: ' + weapon4round + ' | **살보**: ' + Math.trunc(i.Weapon4ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon4SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon4rof + ' | **명중률**: ' + Math.trunc(i.Weapon4HitProbability * 100) + '%');
 
-  let weapon5 = ('**Weapon 5**: ' + i.Weapon5Name + ', ' + i.Weapon5Caliber + ' x' + Math.trunc(i.Weapon5DisplayedAmmunition) + ', ** ' + i.Weapon5Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon5RangeGround) + ' - ' + Math.trunc(i.Weapon5RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon5RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon5RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon5DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon5DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon4AP + ' | **HE Power**: ' + weapon5round + ' | **Salvo**: ' + Math.trunc(i.Weapon5ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon5SupplyCost) + ' per salvo | **ROF**: ' + weapon5rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon5HitProbability * 100) + '%');
+  let weapon5 = ('**무기 5**: ' + i.Weapon5Name + ', ' + i.Weapon5Caliber + ' x' + Math.trunc(i.Weapon5DisplayedAmmunition) + ', ** ' + i.Weapon5Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon5RangeGround) + ' - ' + Math.trunc(i.Weapon5RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon5RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon5RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon5DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon5DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon4AP + ' | **HE(고폭)**: ' + weapon5round + ' | **살보**: ' + Math.trunc(i.Weapon5ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon5SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon5rof + ' | **명중률**: ' + Math.trunc(i.Weapon5HitProbability * 100) + '%');
 
-  let weapon6 = ('**Weapon 6**: ' + i.Weapon6Name + ', ' + i.Weapon6Caliber + ' x' + Math.trunc(i.Weapon6DisplayedAmmunition) + ', ** ' + i.Weapon6Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon6RangeGround) + ' - ' + Math.trunc(i.Weapon6RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon6RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon6RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon6DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon6DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon4AP + ' | **HE Power**: ' + weapon6round + ' | **Salvo**: ' + Math.trunc(i.Weapon6ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon6SupplyCost) + ' per salvo | **ROF**: ' + weapon6rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon6HitProbability * 100) + '%');
+  let weapon6 = ('**무기 6**: ' + i.Weapon6Name + ', ' + i.Weapon6Caliber + ' x' + Math.trunc(i.Weapon6DisplayedAmmunition) + ', ** ' + i.Weapon6Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon6RangeGround) + ' - ' + Math.trunc(i.Weapon6RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon6RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon6RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon6DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon6DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon4AP + ' | **HE(고폭)**: ' + weapon6round + ' | **살보**: ' + Math.trunc(i.Weapon6ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon6SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon6rof + ' | **명중률**: ' + Math.trunc(i.Weapon6HitProbability * 100) + '%');
 
-  let weapon7 = ('**Weapon 7**: ' + i.Weapon7Name + ', ' + i.Weapon7Caliber + ' x' + Math.trunc(i.Weapon7DisplayedAmmunition) + ', ** ' + i.Weapon7Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon7RangeGround) + ' - ' + Math.trunc(i.Weapon7RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon7RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon7RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon7DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon7DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon4AP + ' | **HE Power**: ' + weapon7round + ' | **Salvo**: ' + Math.trunc(i.Weapon7ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon7SupplyCost) + ' per salvo | **ROF**: ' + weapon7rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon7HitProbability * 100) + '%');
+  let weapon7 = ('**무기 7**: ' + i.Weapon7Name + ', ' + i.Weapon7Caliber + ' x' + Math.trunc(i.Weapon7DisplayedAmmunition) + ', ** ' + i.Weapon7Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon7RangeGround) + ' - ' + Math.trunc(i.Weapon7RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon7RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon7RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon7DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon7DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon4AP + ' | **HE(고폭)**: ' + weapon7round + ' | **살보**: ' + Math.trunc(i.Weapon7ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon7SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon7rof + ' | **명중률**: ' + Math.trunc(i.Weapon7HitProbability * 100) + '%');
 
-  let weapon8 = ('**Weapon 8**: ' + i.Weapon8Name + ', ' + i.Weapon8Caliber + ' x' + Math.trunc(i.Weapon8DisplayedAmmunition) + ', ** ' + i.Weapon8Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon8RangeGround) + ' - ' + Math.trunc(i.Weapon8RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon8RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon8RangePlanes) + '| **Dispersion**: Min: ' + Math.trunc(i.Weapon8DispersionAtMinRange) + ', Max: ' + Math.trunc(i.Weapon8DispersionAtMaxRange) + ' | **AP Power**: ' + i.Weapon4AP + ' | **HE Power**: ' + weapon8round + ' | **Salvo**: ' + Math.trunc(i.Weapon8ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon8SupplyCost) + ' per salvo | **ROF**: ' + weapon8rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon8HitProbability * 100) + '%');
+  let weapon8 = ('**무기 8**: ' + i.Weapon8Name + ', ' + i.Weapon8Caliber + ' x' + Math.trunc(i.Weapon8DisplayedAmmunition) + ', ** ' + i.Weapon8Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon8RangeGround) + ' - ' + Math.trunc(i.Weapon8RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon8RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon8RangePlanes) + '| **분산도**: 최소: ' + Math.trunc(i.Weapon8DispersionAtMinRange) + ', 최대: ' + Math.trunc(i.Weapon8DispersionAtMaxRange) + ' | **AP(장갑 관통력)**: ' + i.Weapon4AP + ' | **HE(고폭)**: ' + weapon8round + ' | **살보**: ' + Math.trunc(i.Weapon8ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon8SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon8rof + ' | **명중률**: ' + Math.trunc(i.Weapon8HitProbability * 100) + '%');
 
   // if(i.Weapon2Type == 'AT' && i.Training !== '' && i.Weapon3Name == '') {
   //    title = ('**' + i.Name.toUpperCase() + '**' + '    <:nato_at_infantry:583701946477576192>');
@@ -345,30 +349,30 @@ module.exports.formatting = (i) => {
       title = ('**' + i.Name.toUpperCase() + '**' + ' <:command:583070567301644290>');
     } //if its a cv, give it the cv icon
 
-    category = ('**Logistics** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+    category = ('**군수** | **국가**: ' + i.MotherCountry + ' | ' + proto);
     if (i.Training !== '') {
-      movement = ('**Movement**', '**Type**: ' + i.MovementType + ' | **Speed**: ' + Math.trunc(i.MaxSpeed) + 'kph | **Stealth**: ' + i.Stealth + ' \n **Ground optics**: ' + i.OpticalStrengthGround + ' | **Training**: ' + i.Training);
-      description = ('**Price**: ' + i.Price);
+      movement = ('**이동**', '**종류**: ' + i.MovementType + ' | **속도**: ' + Math.trunc(i.MaxSpeed) + 'kph | **스텔스**: ' + i.Stealth + ' \n **지상 관측**: ' + i.OpticalStrengthGround + ' | **훈련도**: ' + i.Training);
+      description = ('**가격**: ' + i.Price);
     }
     if (armorfront == 'none' && armorsides == 'none' && armorrear == 'none' && armortop == 'none') {
-      description = ('**Price**: ' + i.Price + ' | **Armor**: Splash');
+      description = ('**가격**: ' + i.Price + ' | **장갑**: Splash');
     }
     if (i.SupplyCapacity !== '') {
-      category = ('**Logistics** | **Supply capacity**: ' + i.SupplyCapacity + ' | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+      category = ('**군수** | **최대 보급량**: ' + i.SupplyCapacity + ' | **국가**: ' + i.MotherCountry + ' | ' + proto);
     }
 
   } else if (i.Tab === 'INF') {
-    category = ('**Infantry** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
-    description = ('**Price**: ' + i.Price);
-    movement = ('**Movement**', '**Type**: ' + i.MovementType + ' | **Speed**: ' + Math.trunc(i.MaxSpeed) + 'kph | **Stealth**: ' + i.Stealth + ' \n **Ground optics**: ' + i.OpticalStrengthGround + ' | **Training**: ' + i.Training);
-    weapon1 = ('**Weapon 1**: ' + i.Weapon1Name + ', ' + i.Weapon1Caliber + ' x' + Math.trunc(i.Weapon1DisplayedAmmunition) + ', ** ' + i.Weapon1Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon1RangeGround) + ' - ' + Math.trunc(i.Weapon1RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon1RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon1RangePlanes) + ' | **AP Power**: ' + i.Weapon1AP + ' | **HE Power**: ' + weapon1round + ' | **Salvo**: ' + Math.trunc(i.Weapon1ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon1SupplyCost) + ' per salvo | **ROF**: ' + weapon1rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon1HitProbability * 100) + '%');
+    category = ('**보병** | **국가**: ' + i.MotherCountry + ' | ' + proto);
+    description = ('**가격**: ' + i.Price);
+    movement = ('**이동**', '**종류**: ' + i.MovementType + ' | **속도**: ' + Math.trunc(i.MaxSpeed) + 'kph | **스텔스**: ' + i.Stealth + ' \n **지상 관측**: ' + i.OpticalStrengthGround + ' | **훈련도**: ' + i.Training);
+    weapon1 = ('**무기 1**: ' + i.Weapon1Name + ', ' + i.Weapon1Caliber + ' x' + Math.trunc(i.Weapon1DisplayedAmmunition) + ', ** ' + i.Weapon1Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon1RangeGround) + ' - ' + Math.trunc(i.Weapon1RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon1RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon1RangePlanes) + ' | **AP(장갑 관통력)**: ' + i.Weapon1AP + ' | **HE(고폭)**: ' + weapon1round + ' | **살보**: ' + Math.trunc(i.Weapon1ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon1SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon1rof + ' | **명중률**: ' + Math.trunc(i.Weapon1HitProbability * 100) + '%');
 
-    weapon2 = ('**Weapon 2**: ' + i.Weapon2Name + ', ' + i.Weapon2Caliber + ' x' + Math.trunc(i.Weapon2DisplayedAmmunition) + ', ** ' + i.Weapon2Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon2RangeGround) + ' - ' + Math.trunc(i.Weapon2RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon2RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon2RangePlanes) + ' | **AP Power**: ' + i.Weapon2AP + ' | **HE Power**: ' + weapon2round + ' | **Salvo**: ' + Math.trunc(i.Weapon2ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon2SupplyCost) + ' per salvo | **ROF**: ' + weapon2rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon2HitProbability * 100) + '%');
+    weapon2 = ('**무기 2**: ' + i.Weapon2Name + ', ' + i.Weapon2Caliber + ' x' + Math.trunc(i.Weapon2DisplayedAmmunition) + ', ** ' + i.Weapon2Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon2RangeGround) + ' - ' + Math.trunc(i.Weapon2RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon2RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon2RangePlanes) + ' | **AP(장갑 관통력)**: ' + i.Weapon2AP + ' | **HE(고폭)**: ' + weapon2round + ' | **살보**: ' + Math.trunc(i.Weapon2ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon2SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon2rof + ' | **명중률**: ' + Math.trunc(i.Weapon2HitProbability * 100) + '%');
 
-    weapon3 = ('**Weapon 3**: ' + i.Weapon3Name + ', ' + i.Weapon3Caliber + ' x' + Math.trunc(i.Weapon3DisplayedAmmunition) + ', ** ' + i.Weapon3Tags + '** | **RANGE**: Ground: ' + Math.trunc(i.Weapon3RangeGround) + ' - ' + Math.trunc(i.Weapon3RangeGroundMinimum) + ', Helicopters: ' + Math.trunc(i.Weapon3RangeHelicopters) + ', Airplanes: ' + Math.trunc(i.Weapon3RangePlanes) + ' | **AP Power**: ' + i.Weapon3AP + ' | **HE Power**: ' + weapon3round + ' | **Salvo**: ' + Math.trunc(i.Weapon3ShotsPerSalvo) + ' Shots | **Supply Cost**: ' + Math.trunc(i.Weapon3SupplyCost) + ' per salvo | **ROF**: ' + weapon3rof + ' | **Accuracy**: ' + Math.trunc(i.Weapon3HitProbability * 100) + '%');
+    weapon3 = ('**무기 3**: ' + i.Weapon3Name + ', ' + i.Weapon3Caliber + ' x' + Math.trunc(i.Weapon3DisplayedAmmunition) + ', ** ' + i.Weapon3Tags + '** | **사거리**: 지상: ' + Math.trunc(i.Weapon3RangeGround) + ' - ' + Math.trunc(i.Weapon3RangeGroundMinimum) + ', 회전익: ' + Math.trunc(i.Weapon3RangeHelicopters) + ', 고정익: ' + Math.trunc(i.Weapon3RangePlanes) + ' | **AP(장갑 관통력)**: ' + i.Weapon3AP + ' | **HE(고폭)**: ' + weapon3round + ' | **살보**: ' + Math.trunc(i.Weapon3ShotsPerSalvo) + ' 탄약 | **보급 비용**: ' + Math.trunc(i.Weapon3SupplyCost) + ' (살보 당) | **연사 속도**: ' + weapon3rof + ' | **명중률**: ' + Math.trunc(i.Weapon3HitProbability * 100) + '%');
 
   } else if (i.Tab === 'SUP') {
-    category = ('**Support** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+    category = ('**지원** | **국가**: ' + i.MotherCountry + ' | ' + proto);
     if (i.Weapon1Caliber.includes('Radar') && weapon1rof > 30) {
       title = title + ' <:nato_aa_flak_vehicle_rad:583815605442969600>';
 
@@ -378,52 +382,52 @@ module.exports.formatting = (i) => {
 
     }
   } else if (i.Tab === 'TNK') {
-    category = ('**Tank** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+    category = ('**기갑** | **국가**: ' + i.MotherCountry + ' | ' + proto);
     if (i.Weapon1ShotsPerSalvo == i.Weapon1DisplayedAmmunition) {
       category = category + ' | **AUTOLOADED**';
 
     }
 
   } else if (i.Tab === 'REC') {
-    category = ('**Recon** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+    category = ('**정찰** | **국가**: ' + i.MotherCountry + ' | ' + proto);
   } else if (i.Tab === 'VHC') {
-    category = ('**Vehicle** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+    category = ('**차량** | **국가**: ' + i.MotherCountry + ' | ' + proto);
   } else if (i.Tab === 'HEL') {
-    category = ('**Helicopter** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+    category = ('**고정익** | **국가**: ' + i.MotherCountry + ' | ' + proto);
   } else if (i.Tab === 'PLA') {
 
     const airOptics = {
-      '150': 'Good (150)',
-      '300': 'Very Good (300)',
-      '450': 'Exceptional (450)',
-      '900': 'Exceptional + (900)',
+      '150': '좋음 (150)',
+      '300': '매우 좋음 (300)',
+      '450': '탁월함 (450)',
+      '900': '탁월함 + (900)',
     };
     if (airOptics.hasOwnProperty(i.OpticalStrengthAir)) {
       i.OpticalStrengthAir = airOptics[i.OpticalStrengthAir];
     }
 
-    description = ('**Price**: ' + i.Price);
+    description = ('**가격**: ' + i.Price);
     if (i.Name === 'A10ATHUNDERBOLTII' || i.Name === 'SU25T') {
-      description = ('**Price**: ' + i.Price + ' | **Armor: ** Front: ' + armorfront + ' | Sides: ' + armorsides + ' | Rear: ' + armorrear + ' | Top: ' + armortop);
+      description = ('**가격**: ' + i.Price + ' | **장갑: ** 전면: ' + armorfront + ' | 측면: ' + armorsides + ' | 후면: ' + armorrear + ' | 상면: ' + armortop);
     }
 
-    category = ('**Plane** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
-    movement = ('**Movement**', '**Type**: ' + i.MovementType + ' | **Speed**: ' + Math.trunc(i.MaxSpeed) + 'kph | **Stealth**: ' + i.Stealth + ' \n **Air Optics**: ' + i.OpticalStrengthAir);
+    category = ('**항공** | **국가**: ' + i.MotherCountry + ' | ' + proto);
+    movement = ('**이동**', '**종류**: ' + i.MovementType + ' | **속도**: ' + Math.trunc(i.MaxSpeed) + 'kph | **스텔스**: ' + i.Stealth + ' \n **항공 관측**: ' + i.OpticalStrengthAir);
     if (i.Weapon1Caliber == 'Antiradar' || i.Weapon2Caliber == 'Antiradar' || i.Weapon3Caliber == 'Antiradar') {
       title = title + ' <:nato_sead:583815605124202507>';
     }
 
   } else if (i.Tab = 'NAV') {
-    category = ('**Naval** | **Nationality**: ' + i.MotherCountry + ' | ' + proto);
+    category = ('**해군** | **국가**: ' + i.MotherCountry + ' | ' + proto);
   }
-  weapon1 = weapon1 + (' | **Reloads**: ' + i.Weapon1TimeBetweenShots + 's/Shot, ' + i.Weapon1TimeBetweenSalvos + 's/Salvo');
-  weapon2 = weapon2 + (' | **Reloads**: ' + i.Weapon2TimeBetweenShots + 's/Shot, ' + i.Weapon2TimeBetweenSalvos + 's/Salvo');
-  weapon3 = weapon3 + (' | **Reloads**: ' + i.Weapon3TimeBetweenShots + 's/Shot, ' + i.Weapon3TimeBetweenSalvos + 's/Salvo');
-  weapon4 = weapon4 + (' | **Reloads**: ' + i.Weapon4TimeBetweenShots + 's/Shot, ' + i.Weapon4TimeBetweenSalvos + 's/Salvo');
-  weapon5 = weapon5 + (' | **Reloads**: ' + i.Weapon5TimeBetweenShots + 's/Shot, ' + i.Weapon5TimeBetweenSalvos + 's/Salvo');
-  weapon6 = weapon6 + (' | **Reloads**: ' + i.Weapon6TimeBetweenShots + 's/Shot, ' + i.Weapon6TimeBetweenSalvos + 's/Salvo');
-  weapon7 = weapon7 + (' | **Reloads**: ' + i.Weapon7TimeBetweenShots + 's/Shot, ' + i.Weapon7TimeBetweenSalvos + 's/Salvo');
-  weapon8 = weapon8 + (' | **Reloads**: ' + i.Weapon8TimeBetweenShots + 's/Shot, ' + i.Weapon8TimeBetweenSalvos + 's/Salvo');
+  weapon1 = weapon1 + (' | **재장전**: ' + i.Weapon1TimeBetweenShots + '초 (1발 당), ' + i.Weapon1TimeBetweenSalvos + '초 (살보 당)');
+  weapon2 = weapon2 + (' | **재장전**: ' + i.Weapon2TimeBetweenShots + '초 (1발 당), ' + i.Weapon2TimeBetweenSalvos + '초 (살보 당)');
+  weapon3 = weapon3 + (' | **재장전**: ' + i.Weapon3TimeBetweenShots + '초 (1발 당), ' + i.Weapon3TimeBetweenSalvos + '초 (살보 당)');
+  weapon4 = weapon4 + (' | **재장전**: ' + i.Weapon4TimeBetweenShots + '초 (1발 당), ' + i.Weapon4TimeBetweenSalvos + '초 (살보 당)');
+  weapon5 = weapon5 + (' | **재장전**: ' + i.Weapon5TimeBetweenShots + '초 (1발 당), ' + i.Weapon5TimeBetweenSalvos + '초 (살보 당)');
+  weapon6 = weapon6 + (' | **재장전**: ' + i.Weapon6TimeBetweenShots + '초 (1발 당), ' + i.Weapon6TimeBetweenSalvos + '초 (살보 당)');
+  weapon7 = weapon7 + (' | **재장전**: ' + i.Weapon7TimeBetweenShots + '초 (1발 당), ' + i.Weapon7TimeBetweenSalvos + '초 (살보 당)');
+  weapon8 = weapon8 + (' | **재장전**: ' + i.Weapon8TimeBetweenShots + '초 (1발 당), ' + i.Weapon8TimeBetweenSalvos + '초 (살보 당)');
 
   if (i.Weapon7Name == i.Weapon8Name) {
     i.weapon8Name = '';
@@ -442,66 +446,66 @@ module.exports.formatting = (i) => {
   if (i.Weapon1Name == i.Weapon2Name) {
     i.weapon2Name = '';
   }
-  description = description + ' | **Strength**: ' + i.Strength;
+  description = description + ' | **체력**: ' + i.Strength;
 
-  weapon1 = weapon1 + (' | **Stabilizer**: ' + Math.trunc(i.Weapon1HitProbabilityWhileMoving * 100) + '%');
-  weapon2 = weapon2 + (' | **Stabilizer**: ' + Math.trunc(i.Weapon2HitProbabilityWhileMoving * 100) + '%');
-  weapon3 = weapon3 + (' | **Stabilizer**: ' + Math.trunc(i.Weapon3HitProbabilityWhileMoving * 100) + '%');
+  weapon1 = weapon1 + (' | **안정장치**: ' + Math.trunc(i.Weapon1HitProbabilityWhileMoving * 100) + '%');
+  weapon2 = weapon2 + (' | **안정장치**: ' + Math.trunc(i.Weapon2HitProbabilityWhileMoving * 100) + '%');
+  weapon3 = weapon3 + (' | **안정장치**: ' + Math.trunc(i.Weapon3HitProbabilityWhileMoving * 100) + '%');
 
   if(i.Weapon1Type == 'Howitzer' || i.Weapon1Type == 'MLRS') {
-    weapon1 = weapon1 + (' | **Aimtime** : ' + i.Weapon1AimTime);
+    weapon1 = weapon1 + (' | **조준 속도** : ' + i.Weapon1AimTime);
   }
   if(i.Weapon2Type == 'Howitzer' || i.Weapon2Type == 'MLRS') {
-    weapon2 = weapon2 + (' | **Aimtime** : ' + i.Weapon2AimTime);
+    weapon2 = weapon2 + (' | **조준 속도** : ' + i.Weapon2AimTime);
   }
 
   if(i.Weapon1MissileMaxSpeed !== '') {
-    weapon1 = weapon1 + (' | **Missile Speed**: ' + i.Weapon1MissileMaxSpeed);
+    weapon1 = weapon1 + (' | **탄 속도**: ' + i.Weapon1MissileMaxSpeed);
   }
   if(i.Weapon2MissileMaxSpeed !== '') {
-    weapon2 = weapon2 + (' | **Missile Speed**: ' + i.Weapon2MissileMaxSpeed);
+    weapon2 = weapon2 + (' | **탄 속도**: ' + i.Weapon2MissileMaxSpeed);
   }
   if(i.Weapon3MissileMaxSpeed !== '') {
-    weapon3 = weapon3 + (' | **Missile Speed**: ' + i.Weapon3MissileMaxSpeed);
+    weapon3 = weapon3 + (' | **탄 속도**: ' + i.Weapon3MissileMaxSpeed);
   }
 
-  category = category + (' \n **Spec decks**: ' + i.Decks);
+  category = category + (' \n **카테고리**: ' + i.Decks);
   const embed = new Discord.RichEmbed()
 
     .setTitle(title)
     .setDescription(description)
     .setColor(color)
 
-    .addField('**Category**', category)
+    .addField('**카테고리**', category)
 
-    .addField('**Movement**', movement)
+    .addField('**이동**', movement)
 
-    .addField('**Availability**', availability);
+    .addField('**가용량**', availability);
 
   //add fields for weapons only if the unit has the weapons
   if (i.Weapon1Name !== '') {
-    embed.addField('**Weapon 1 ( ' + i.Weapon1Type + ')**', weapon1);
+    embed.addField('**무기 1 ( ' + i.Weapon1Type + ')**', weapon1);
   }
   if (i.Weapon2Name !== '') {
-    embed.addField('**Weapon 2 ( ' + i.Weapon2Type + ')**', weapon2);
+    embed.addField('**무기 2 ( ' + i.Weapon2Type + ')**', weapon2);
   }
   if (i.Weapon3Name !== '') {
-    embed.addField('**Weapon 3 ( ' + i.Weapon3Type + ')**', weapon3);
+    embed.addField('**무기 3 ( ' + i.Weapon3Type + ')**', weapon3);
   }
   if (i.Weapon4Name !== '') {
-    embed.addField('**Weapon 4 ( ' + i.Weapon4Type + ')**', weapon4);
+    embed.addField('**무기 4 ( ' + i.Weapon4Type + ')**', weapon4);
   }
   if (i.Weapon5Name !== '') {
-    embed.addField('**Weapon 5 ( ' + i.Weapon5Type + ')**', weapon5);
+    embed.addField('**무기 5 ( ' + i.Weapon5Type + ')**', weapon5);
   }
   if (i.Weapon6Name !== '') {
-    embed.addField('**Weapon 6 ( ' + i.Weapon6Type + ')**', weapon6);
+    embed.addField('**무기 6 ( ' + i.Weapon6Type + ')**', weapon6);
   }
   if (i.Weapon7Name !== '') {
-    embed.addField('**Weapon 7 ( ' + i.Weapon7Type + ')**', weapon7);
+    embed.addField('**무기 7 ( ' + i.Weapon7Type + ')**', weapon7);
   }
   if (i.Weapon8Name !== '') {
-    embed.addField('**Weapon 8 ( ' + i.Weapon8Type + ')**', weapon8);
+    embed.addField('**무기 8 ( ' + i.Weapon8Type + ')**', weapon8);
   }
 
 
@@ -511,7 +515,7 @@ module.exports.formatting = (i) => {
     } else if (i.Weapon2Type == 'ATGM' && Number(i.Strength) < 10 && i.Training !== '') {
       embed.setThumbnail('https://imgur.com/CyGxIIc.png');
     } else if (i.Weapon2Type == 'AT' && i.Weapon3Name === '' && i.Training !== '') {
-      embed.setThumbnail('https://imgur.com/Kafpr4d.png');
+      embed.setThumbnail('https://imgur.com/Fsu5xhP.png');
     } else if (i.Weapon2Type == 'Flamethrower') {
       embed.setThumbnail('https://imgur.com/y5h3LEE.png');
     } else if (i.Training == 'Shock' && Number(i.MaxSpeed) > 38) {

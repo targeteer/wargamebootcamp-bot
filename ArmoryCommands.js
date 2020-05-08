@@ -121,7 +121,7 @@ module.exports.git = (args, message, limit, displaylimit) => {
     return;
   }
 
-  if (matchingUnits5.length > 10) {
+  if (matchingUnits5.length > 30) {
     message.reply('Too many units to display paging');
     return;
   }

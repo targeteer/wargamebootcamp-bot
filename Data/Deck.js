@@ -74,12 +74,12 @@ module.exports.decode = (deckCode) => {
    }
    if (deckBinary.charAt(1) == '0')
    {
-       Deck.sSide = "BLU";
+       Deck.sSide = "블루포";
        Deck.iSide = 0;
    }
    else if (deckBinary.charAt(1) == '1')
    {
-       Deck.sSide = "RED";
+       Deck.sSide = "레드포";
        Deck.iSide = 1;
    }
    else
@@ -93,40 +93,40 @@ module.exports.decode = (deckCode) => {
    {
        Deck.iNation += deckBinary.charAt(i);
    }//magic numbers galore
-   if (Deck.iNation == "000000001100") { Deck.sNation = "USA"; } else
-   if (Deck.iNation == "000000101100") { Deck.sNation = "UK"; } else
-   if (Deck.iNation == "000001001100") { Deck.sNation = "France"; } else
-   if (Deck.iNation == "000001101100") { Deck.sNation = "West Germany"; } else
-   if (Deck.iNation == "000010001100") { Deck.sNation = "Canada"; } else
-   if (Deck.iNation == "000010101100") { Deck.sNation = "Denmark"; } else
-   if (Deck.iNation == "000011001100") { Deck.sNation = "Sweded"; } else
-   if (Deck.iNation == "000011101100") { Deck.sNation = "Norway"; } else
+   if (Deck.iNation == "000000001100") { Deck.sNation = "미국"; } else
+   if (Deck.iNation == "000000101100") { Deck.sNation = "영국"; } else
+   if (Deck.iNation == "000001001100") { Deck.sNation = "프랑스"; } else
+   if (Deck.iNation == "000001101100") { Deck.sNation = "서독"; } else
+   if (Deck.iNation == "000010001100") { Deck.sNation = "캐나다"; } else
+   if (Deck.iNation == "000010101100") { Deck.sNation = "덴마크"; } else
+   if (Deck.iNation == "000011001100") { Deck.sNation = "스웨덴"; } else
+   if (Deck.iNation == "000011101100") { Deck.sNation = "노르웨이"; } else
    if (Deck.iNation == "000100001100") { Deck.sNation = "ANZAC"; } else
-   if (Deck.iNation == "000100101100") { Deck.sNation = "Japan"; } else
-   if (Deck.iNation == "000101001100") { Deck.sNation = "ROK"; } else
-   if (Deck.iNation == "000101101100") { Deck.sNation = "Netherlands"; } else
-   if (Deck.iNation == "000110001100") { Deck.sNation = "Israel";} else
-   if (Deck.iNation == "000111100000") { Deck.sNation = "Eurocorps"; } else
-   if (Deck.iNation == "000111100001") { Deck.sNation = "Scandi"; } else
-   if (Deck.iNation == "000111100010") { Deck.sNation = "Commonwealth"; } else
-   if (Deck.iNation == "000111100011") { Deck.sNation = "Blue Dragons"; } else
-   if (Deck.iNation == "000111100110") { Deck.sNation = "Landjut"; } else
+   if (Deck.iNation == "000100101100") { Deck.sNation = "일본"; } else
+   if (Deck.iNation == "000101001100") { Deck.sNation = "대한민국"; } else
+   if (Deck.iNation == "000101101100") { Deck.sNation = "네덜란드"; } else
+   if (Deck.iNation == "000110001100") { Deck.sNation = "이스라엘";} else
+   if (Deck.iNation == "000111100000") { Deck.sNation = "유로콥스"; } else
+   if (Deck.iNation == "000111100001") { Deck.sNation = "스칸디"; } else
+   if (Deck.iNation == "000111100010") { Deck.sNation = "영연방"; } else
+   if (Deck.iNation == "000111100011") { Deck.sNation = "청룡"; } else
+   if (Deck.iNation == "000111100110") { Deck.sNation = "란트유트"; } else
    if (Deck.iNation == "000111101000") { Deck.sNation = "NORAD"; } else
    if (Deck.iNation == "000111101001") { Deck.sNation = "DGC"; } else
-   if (Deck.iNation == "000111101100") { Deck.sNation = "Blue"; } else
-   if (Deck.iNation == "010000001100") { Deck.sNation = "West Germany"; } else
-   if (Deck.iNation == "010000101100") { Deck.sNation = "USSR"; } else
-   if (Deck.iNation == "010001001100") { Deck.sNation = "Poland"; } else
-   if (Deck.iNation == "010001101100") { Deck.sNation = "Czech"; } else
-   if (Deck.iNation == "010010001100") { Deck.sNation = "China"; } else
-   if (Deck.iNation == "010010101100") { Deck.sNation = "North Korea"; } else
-   if (Deck.iNation == "010011001100") { Deck.sNation = "Finland"; } else
-   if (Deck.iNation == "010011101100") { Deck.sNation = "Yugoslavia"; } else
-   if (Deck.iNation == "010100100100") { Deck.sNation = "Red Dragons"; } else
-   if (Deck.iNation == "010100100101") { Deck.sNation = "Eastern Bloc"; } else
-   if (Deck.iNation == "010100101010") { Deck.sNation = "Baltic Front"; } else
-   if (Deck.iNation == "010100101011") { Deck.sNation = "Entente"; } else
-   if (Deck.iNation == "010100101100") { Deck.sNation = "Red"; } 
+   if (Deck.iNation == "000111101100") { Deck.sNation = "블루"; } else
+   if (Deck.iNation == "010000001100") { Deck.sNation = "서독"; } else
+   if (Deck.iNation == "010000101100") { Deck.sNation = "소련"; } else
+   if (Deck.iNation == "010001001100") { Deck.sNation = "폴란트"; } else
+   if (Deck.iNation == "010001101100") { Deck.sNation = "체코"; } else
+   if (Deck.iNation == "010010001100") { Deck.sNation = "중국"; } else
+   if (Deck.iNation == "010010101100") { Deck.sNation = "북한"; } else
+   if (Deck.iNation == "010011001100") { Deck.sNation = "핀란드"; } else
+   if (Deck.iNation == "010011101100") { Deck.sNation = "유고슬라비아"; } else
+   if (Deck.iNation == "010100100100") { Deck.sNation = "적룡"; } else
+   if (Deck.iNation == "010100100101") { Deck.sNation = "동구권"; } else
+   if (Deck.iNation == "010100101010") { Deck.sNation = "발틱전선"; } else
+   if (Deck.iNation == "010100101011") { Deck.sNation = "앙탕트"; } else
+   if (Deck.iNation == "010100101100") { Deck.sNation = "레드"; } 
    //13
    Deck.sSpec = "";
    for (var i = 12; i <= 14; i++)
@@ -134,14 +134,14 @@ module.exports.decode = (deckCode) => {
        Deck.sSpec += deckBinary.charAt(i);
    }
    Deck.iSpec = parseInt(Deck.sSpec, 2);
-   if (Deck.iSpec == 0) { Deck.sSpec = "Motorized"; } else
-   if (Deck.iSpec == 1) { Deck.sSpec = "Armored"; } else
-   if (Deck.iSpec == 2) { Deck.sSpec = "Support"; } else
-   if (Deck.iSpec == 3) { Deck.sSpec = "Marine"; } else
-   if (Deck.iSpec == 4) { Deck.sSpec = "Mechanized"; } else
-   if (Deck.iSpec == 5) { Deck.sSpec = "Airborne"; } else
-   if (Deck.iSpec == 6) { Deck.sSpec = "Naval"; } else
-   if (Deck.iSpec == 7) { Deck.sSpec = "General"; }
+   if (Deck.iSpec == 0) { Deck.sSpec = "차량화"; } else
+   if (Deck.iSpec == 1) { Deck.sSpec = "기갑"; } else
+   if (Deck.iSpec == 2) { Deck.sSpec = "지원"; } else
+   if (Deck.iSpec == 3) { Deck.sSpec = "해병"; } else
+   if (Deck.iSpec == 4) { Deck.sSpec = "기계화"; } else
+   if (Deck.iSpec == 5) { Deck.sSpec = "공수"; } else
+   if (Deck.iSpec == 6) { Deck.sSpec = "해군"; } else
+   if (Deck.iSpec == 7) { Deck.sSpec = "무특성"; }
 
    Deck.sEra = "";
    for (var i = 15; i <= 16; i++)
@@ -154,6 +154,6 @@ module.exports.decode = (deckCode) => {
    if (Deck.iEra == 2) { Deck.sEra = ""; }
    
 let fulldeck = Deck.sNation + ' ' + Deck.sSpec + ' ' + Deck.sEra;
-return fulldeck;
+return [fulldeck, Deck.iSide];
 
 }

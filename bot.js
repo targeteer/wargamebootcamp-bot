@@ -4,7 +4,8 @@ const client = new Discord.Client();
 const prefix = '!';
 const commands = require('./ArmoryCommands.js');
 const commonCommands = require('./Commands.js');
-const token = process.env.token;
+// const token = process.env.token;
+const token = "NzA3NTAzMDc2MjczMDI5MTYx.XrJvqw.rpfcMqAVFnGRnJgIl-39yRlJFyI"
 const format = require('./Formatting.js');
 const fs = require('fs');
 const Q = require('q');
@@ -19,15 +20,53 @@ const results = [];
 var units = require('./Data/UnitData.json');
 var stringSimilarity = require('string-similarity');
 const MSGES = require('./Mongoose/messageSchema.js');
+const Streaming = require("discord-streaming");
+// const Streamrole = require("discord-streamrole");
+
+  var axioms = ["전투를 앞둔 병사의 눈빛을 본 적이 있는 사람이라면 전쟁을 하자는 말을 하지 못할 것이다.", 
+  "겪어보지 못한 자에게 전쟁이란 달콤한 것이다.",
+  "전쟁은 누구도 좋아서 하는 게 아니오. 이건 의무이지. 국민이 침략의 희생자가 되었을 때 싸워서 스스로를 지키는 것 외에 다른 해결책은 없소.",
+  "나무가 단단하면 곧 부러지고, 군대가 강하면 곧 망할것이다.",
+  "국가간의 전쟁 역시도 우리가 이웃과 다투는 것과 같은 이유로 시작되는 것이다.",
+  "도로써 군주를 보좌하는 이는 군사로 천하를 누르고자 하지 않는다. 결과가 좋으면 될 따름이요, 군사를 쓰지는 않는다.",
+  "군대란 인간을 잡는 흉기요, 전쟁은 덕을 거스르는 것이며, 장수는 죽음을 내리는 관리다.따라서 전쟁은 부득이한 경우에만 하는 것이다.",
+  "그냥 전쟁만 멈춰줘요, 그게 전부예요.",
+  "그들은 노년기에 국가를 위한 아름답고 조화로운 죽음에 관하여 서술하였다. 그러나 현대전에서는 더 이상 아름답거나 조화로운 죽음은 존재하지 않는다. 당신은 아무 이유 없이 개처럼 죽을 것이다.",
+  "그들은 자신들이 하는 일이 저주받을 짓임을 추호도 의심하지 않는다. 그들은 모두 평화를 원하기 때문이다. 그러나 지금, 그들은 무엇인가? 진정 사람인가? 아니면 일부 권력을 잡은 부도덕한 사람들의 움직이는 요새나 탄창인가?",
+  "나는 전쟁이 좋다. 전쟁은 커다란 소풍과 같다.",
+  "나라가 크더라도 전쟁을 좋아하게 되면 반드시 망하는 법이다. 또 아무리 천하가 태평하더라도 전쟁에 대한 만일의 준비를 잊어버리면 반드시 위험한 법이다.",
+  "너희가 우리 군인 10명을 죽일 때 우리는 너희 편 1명을 죽일 테지만 결국 지치는 것은 너희들일 것이다.",
+  "누구나 전쟁에서 자신이 죽는다고 생각하지 않는다. 자신은 살아남아서 죽은 전우들을 묻게 될 것이라고만 생각한다. 하지만 현실은 그렇지 않다.",
+  "늙은이들이 전쟁을 선포한다. 그러나 싸워야 하고 죽어야 하는 것은 젊은이들이다.",
+  "단순히 평화를 외친다고 해서 평화가 이루어지는 게 아니다. 평화는 그저 의미없는 한 단어일 뿐이다. 우리에게 필요한 건 영광스러운 평화다.",
+  "당신은 전쟁에 관심이 없을지 몰라도, 전쟁은 당신에게 관심이 있다.",
+  "더 이상 TV에서, 신문에서, 끔찍한 전쟁 소식이 없었으면 좋겠습니다. 세상의 모든 사람들이 하나로 이어지는 그런 평화의 세상이 올 것입니다. 이제 총소리는 게임 속에서만 들렸으면 좋겠습니다.",
+  "땀 한 파인트는 피 한 갤런을 아끼게 한다.",
+  "맨 먼저 전쟁을 일으킨 자에게 저주가 있으라",
+  "몇천 명이란 사람을 살해하는 것은 외견상으로 훌륭한 이름이 주어진다. 전쟁은 영광의 기술이며 불멸의 명성을 부여한다.",];
+  var axiomLength = axioms.length;
+
+  var maps = ["푸른징 계곡", "진흙탕 싸움", "논밭", "펀치볼", "1번 국도", "한 평의 지옥", "핵 겨울"];
+  var maplength = maps.length;
+
+  var filter = ["뉴비"];
+
 
 client.once('ready', () => {
   console.log('Bot running in the index file.');
   client.user.setPresence({
     game: {
       name: status,
-      type: 'WATCHING',
+      type: 'Watching',
+
     },
   }); //sets the bot's status to the default status
+});
+
+ 
+Streaming(client, {
+  live :  "라이브 가능"
+  // ,required : "undefined" // optional parameter, only use if you want to take action on people of a specific role
 });
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -44,12 +83,34 @@ client.on('error', err => {
 });
 client.on('message', async message => {
 
+
+  
+
+   
+  
+
+
   message.member = await message.guild.fetchMember(message.author);
   const args = message.content.split(' ');
   if(message.attachments.first())
   if(message.attachments.first().url.endsWith('.wargamerpl2') &&  message.channel.id !== '578977435710914560' && message.channel.id !== '578603904183435294' && message.channel.id !== '584806407186939928' && message.channel.id !== '615451491821420544') {
     commonCommands.replay(args, message);
   }
+
+   // filter certain words in the messages --------------
+  //  if(message.content === '뉴비') {
+  //   message.reply('고인물이 무슨 뉴비냐?');
+  //   return;
+  //  }
+
+//    if(message.content.includes('뉴비')) {
+//     message.reply('고인물이 무슨 뉴비냐');
+//     return;
+// }
+
+
+  
+
 
   if (message.author.bot) {
     return; //if the author of the message is the bot, do nothing.
@@ -70,6 +131,7 @@ client.on('message', async message => {
   }
   commandName = commandName.slice(1);
   commandName = commandName.toLowerCase();
+
 
   const adminRoles = ['376252102843826176', '577607802197901332', '584124615647821857']; //defines the roles considered as admins and returns either true or false with 'admin'
   let admin;
@@ -96,8 +158,11 @@ client.on('message', async message => {
   }
 
 
+ 
   // write commands below this line ---------------------------------------------------
 
+
+  
 
   switch (commandName) {
 
@@ -187,21 +252,6 @@ client.on('message', async message => {
       break;
 
 
-
-
-    //case 'flip':
-     // var coin = Math.floor(Math.random() * (2 - 1 + 1)) + 1; //gets a random number 1 to 2
-
-     // if (coin == '1') { //if the value is 1, return heads, if its 2, return tails
-       // message.reply('Heads');
-     // } else if (coin == '2') {
-    //    message.reply('Tails');
-   //   }
-   //   break;
-
-
-
-
    case 'similarity':
        argsCommaSplit[0] = argsCommaSplit[0].replaceAll(/(\w*!similarity\w*)*\s/gi, '').toLowerCase();
        argsCommaSplit[1] = argsCommaSplit[1].replaceAll(/\s/g, '').toLowerCase();
@@ -261,7 +311,8 @@ client.on('message', async message => {
         .setTitle('**Bootcamp/ Armory bot**')
         .setDescription('A bot developed by senorDickweed#7033 for the r/wargamebootcamp server, offers common commands and unit search functions, coded in discord.js, **for commands use !help**')
         .addField('Acknowledgements', '1: **Tyrnek#2495** for letting me do this lol \n 2: **Lawlzer#4013** for helping a lot on the code \n 3: **Mbetts#9468** for helping me a lot on the formatting and the code \n 4: **Phlogis#9776** for helping with the data aspect of the units \n 5: **Crankytoaster#1240** for telling me everything wrong with it lol \n 6: **rogertheshrubb3r#0862** for the amazing regexp search algorithm and more \n 5: **everyone** on the testing server that helped me test the bot')
-        .addField('Code', 'https://github.com/duckthecuck/wargamebootcamp-bot');
+        .addField('Code', 'https://github.com/duckthecuck/wargamebootcamp-bot')
+        .addField('**한국어 번역**', 'DK');
       message.channel.send(embed);
       break;
       case 'code':
@@ -278,26 +329,286 @@ client.on('message', async message => {
 
   }
 
+  //디코방 역할 계급순 - 병사, 원사, 위관, 영관, 장성
+  var ranks = ["707534156351013015","707534154652188673","707534152542584942", "707534233890979902","707534233240862721"];  
 
   if (commoncommands == true) {
+    var lotto = Math.floor(Math.random() * axiomLength);
     switch (commandName) {
-      case 'rookie':
-        if (!message.member.roles.has('502524273731043328')) {
-          message.member.addRole('502524273731043328');
-          message.reply('Successfully added rookie role!');
-        } else if (message.member.roles.has('502524273731043328')) {
-          message.member.removeRole('502524273731043328');
-          message.reply('Successfully removed rookie role!');
+      case '신병':
+        if (!message.member.roles.has('707534156351013015') && !message.member.roles.has('707534154652188673') && !message.member.roles.has('707534152542584942') && !message.member.roles.has('707534233890979902') && !message.member.roles.has('707534233240862721')) {
+          message.member.addRole('707534156351013015');
+          message.reply('워게임 입문을 환영합니다.');
+          message.reply(axioms[lotto]);
+          break;
+        } else if (message.member.roles.has('707534156351013015')) {
+          message.member.removeRole('707534156351013015');ㄴ
+          message.reply('신병 계급 삭제 중...');
+          break;
+        } 
+
+        if(message.member.roles.has('707534154652188673')){
+          message.member.addRole('707534156351013015');
+          message.member.removeRole('707534154652188673');
+          message.reply('강등당하셨군요. 그렇다고 헬리 스팸은 하지 마세요.');
+          break;
+        }
+        else {
+          message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+          break;
+        }
+
+        message.reply('혹시 부캐를 파셨나요? 어떻게 신병으로 다시 입대하시죠?');
+        break;
+        case '부사관':
+        if(message.member.roles.has('707534156351013015')){
+          if (!message.member.roles.has('707534154652188673')) {
+            message.member.addRole('707534154652188673');
+            message.member.removeRole('707534156351013015');
+            message.member.removeRole('707534152542584942');
+            message.member.removeRole('707534233890979902');
+            message.member.removeRole('707534233240862721');
+            message.reply('충성! 원사 진급을 축하드립니다.');
+            message.reply(axioms[lotto]);
+
+            break;
+          }
+        } 
+        
+        // else {
+        //   message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+        //   break;
+        // }
+        if (message.member.roles.has('707534154652188673')) {
+          message.member.removeRole('707534154652188673');
+          message.reply('부사관 계급 삭제 중...');
+          break;
+        }
+
+        if(message.member.roles.has('707534152542584942')){
+          message.member.addRole('707534154652188673');
+          message.member.removeRole('707534152542584942');
+          message.reply('강등당하셨군요.')
+        } else {
+          message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+          break;
+        }
+
+        break;
+        case '위관':
+          if(message.member.roles.has('707534154652188673')){
+            if (!message.member.roles.has('707534152542584942')) {
+          message.member.addRole('707534152542584942');
+          message.member.removeRole('707534156351013015');
+          message.member.removeRole('707534154652188673');
+          message.member.removeRole('707534233890979902');
+          message.member.removeRole('707534233240862721');
+          message.reply('충성! 위관 진급을 축하드립니다.');
+          message.reply(axioms[lotto]);
+
+          break;
+        }
+       }
+      //   else {
+      //   message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+      //   break;
+      //  }
+        if (message.member.roles.has('707534152542584942')) {
+          message.member.removeRole('707534152542584942');
+          message.reply('위관 계급 삭제 중...');
+          break;
+        }
+
+        if(message.member.roles.has('707534233890979902')){
+          message.member.addRole('707534152542584942');
+          message.member.removeRole('707534233890979902');
+          message.reply('강등당하셨군요.')
+        } else {
+          message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+          break;
+        }
+
+        break;
+        case '영관':
+        if(message.member.roles.has('707534152542584942')){
+        if (!message.member.roles.has('707534233890979902')) {
+          message.member.addRole('707534233890979902');
+          message.member.removeRole('707534156351013015');
+          message.member.removeRole('707534154652188673');
+          message.member.removeRole('707534152542584942');
+          message.member.removeRole('707534233240862721');
+          message.reply('충성! 영관 진급을 축하드립니다.');
+          message.reply(axioms[lotto]);
+
+          break;
+          
+        } 
+      } 
+      // else{
+      //   message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+      //   break;
+      // } 
+      if (message.member.roles.has('707534233890979902')) {
+          message.member.removeRole('707534233890979902');
+          message.reply('영관 계급 삭제 중...');
+          break;
+        }
+
+        if(message.member.roles.has('707534233240862721')){
+          message.member.addRole('707534233890979902');
+          message.member.removeRole('707534233240862721');
+          message.reply('강등당하셨군요.')
+        } else {
+          message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+          break;
+        }
+
+
+        break;
+        case '장성':
+          if(message.member.roles.has('707534233890979902')){
+        if (!message.member.roles.has('707534233240862721')) {
+          message.member.addRole('707534233240862721');
+          message.member.removeRole('707534156351013015');
+          message.member.removeRole('707534154652188673');
+          message.member.removeRole('707534152542584942');
+          message.member.removeRole('707534233890979902');
+          message.reply('충성! 장성 진급을 축하드립니다.');
+          message.reply(axioms[lotto]);
+
+          break;
+        } 
+      }
+      // else {
+      //             message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+      //             break;
+
+      //   }
+        
+        if (message.member.roles.has('707534233240862721')) {
+          message.member.removeRole('707534233240862721');
+          message.reply('장군 계급 삭제 중...');
+        } else {
+          message.reply('영창가기 싫으면 계급 사칭하지 마세요');
+          break;
         }
         break;
-      case 'lfg':
-        if (!message.member.roles.has('351126993838014476')) {
-          message.member.addRole('351126993838014476');
-          message.reply('Successfully added lfg role!');
-        } else if (message.member.roles.has('351126993838014476')) {
-          message.member.removeRole('351126993838014476');
-          message.reply('Successfully removed lfg role!');
+        
+      case '큐':
+        
+        if (!message.member.roles.has('707528572872556544')) {
+          message.member.addRole('707528572872556544');
+          message.reply('님께서 게임을 찾는 중...');
+
+        //게임 상대 찾는 중 역할 key
+        let roleID = "707528572872556544";
+        let membersWithRole = message.guild.roles.get(roleID).members;
+        message.channel.send(`현재 ${membersWithRole.size}명이 게임 상대를 찾고 있습니다.`);
+        
+        
+        let player_rec = "계급이 없으셔서 추천 상대를 못 찾겠네요...어서 명령어 '!신병'으로 입대하세요!";
+        var ranks = ["707534156351013015","707534154652188673","707534152542584942", "707534233890979902","707534233240862721"];  
+        var playablerank = [];
+
+        // message.channel.send("DK가 일을 안해서 추천을 못해주겠네요");
+        // break;
+
+        //게임 찾는 플레이어가 병사일 경우
+        // console.log(message.member.roles.has(ranks[0])
+        if (message.roles.has(ranks[0])){
+          playablerank = ranks.slice(0,2);
+          console.log(playablerank);
+
+        
+          // let rec1 = message.member.roles.get(playablerank[0]);
+          // console.log(rec1);
+          // let rec2 = client.users.get(playablerank[1]);
+          // console.log(rec2);
+          // let rec3 = rec1 + rec2;
+
+          // console.log(rec3);
+          
+          if(member.roles.cache.has(playablerank[0])){
+            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+            console.log(message.member.roles);
+          } else {
+            player_rec = "추천할 만한 플레이어들이 없네요. 근데 그냥 실력부터 먼저 올리시는게...";
+          }
         }
+
+        //게임 찾는 플레이어가 부사관일 경우
+        if (message.member.roles.has(ranks[1])){
+
+          playablerank = ranks.slice(1,4);
+          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+
+          if(hasplayablerank){
+            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+            console.log(message.member.roles);
+          } else {
+            player_rec = "추천할 만한 병사/부사관/영관 플레이어들이 없네요.";
+          }
+
+        }
+
+        //게임 찾는 플레이어가 위관일 경우
+        if (message.member.roles.has(ranks[2])){
+
+
+          playablerank = ranks.slice(2,5);
+          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+
+          if(hasplayablerank){
+            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+            console.log(message.member.roles);
+          } else {
+            player_rec = "추천할 만한 부사관/위관/영관 플레이어들이 없네요.";
+          }
+
+        }
+
+        //게임 찾는 플레이어가 영관일 경우
+        if (message.member.roles.has(ranks[3])){
+          playablerank = ranks.slice(3,6);
+          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+
+          if(hasplayablerank){
+            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+            console.log(message.member.roles);
+          } else {
+            player_rec = "추천할 만한 위관/영관/장성 플레이어들이 없네요.";
+          }
+        }
+
+        //게임 찾는 플레이어가 장성일 경우
+        if (message.member.roles.has(ranks[4])){
+
+          playablerank = ranks.slice(4,6);
+          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+
+          if(hasplayablerank){
+            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+            console.log(message.member.roles);
+          } else {
+            player_rec = "여기 다 못하는 사람들 밖에 없어서 추천을 못하겠네요.";
+          }
+        }
+    
+        message.channel.send(player_rec);
+      }
+
+        if (message.member.roles.has('707528572872556544')) {
+          message.member.removeRole('707528572872556544');
+          message.reply('님께서 탈주하신다네요...');
+        }
+
+        
+        break;
+
+      case '돌림판':
+        message.reply("1대1 랜덤 맵은.....")
+        var ranmap = Math.floor(Math.random() * maplength);
+        message.reply(maps[ranmap]);
         break;
       case 'unspecguide':
         message.reply('Here is the beginner unspec deck building guide: https://www.reddit.com/r/wargamebootcamp/comments/5m0wmz/meta_a_guide_to_unspec_deckbuilding/');
@@ -309,10 +620,14 @@ client.on('message', async message => {
         message.reply('Here is the hon beginner guide: https://honhonhonhon.wordpress.com/how-to-get-started-with-wargame/');
         break;
       case 'razzguide':
+
+       
         message.reply("Here is Razzmann's video guides: https://www.youtube.com/playlist?list=PL3d-ZYWK9TPkb8zuvxNRArw1gyi1fgb0R");
         break;
       case 'keyvalues':
-        message.reply('Here is a link to the Key Values to remember: https://www.reddit.com/r/wargamebootcamp/comments/7oj7nx/list_of_key_values_to_keep_track_of_for_beginners/');
+        message.reply('참고하세요', {
+          files: ['./Data/keyvalues.txt']
+        });
         break;
       case 'armorytool':
         message.reply('Here is a link to the armory tool: https://forums.eugensystems.com/viewtopic.php?t=59265');
@@ -377,6 +692,9 @@ client.on('message', message => {
     });
   }
 });
+
+
+
 client.login(token);
 
 // message.member = await message.guild.fetchMember(message.author.id);
@@ -395,3 +713,6 @@ client.login(token);
 //       let allmessages = await MSGES.find();
 //       commonCommands.imitate(args, message, allmessages);
 //       break;
+
+
+//*live notification code */]

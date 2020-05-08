@@ -193,21 +193,21 @@ module.exports.botcommands = (client, admin) => {
           json.game.Map = json.game.Map.replace(/\_/g, ' ');
 
           const income = {
-              "1":"Very Low -40%",
-              "2":"Low - 20%",
-              "3":"Normal -0%",
-              "4":"High +20%",
-              "5":"Very High +40%"
+              "1":"매우 낮음 -40%",
+              "2":"낮음 - 20%",
+              "3":"보통 -0%",
+              "4":"높음 +20%",
+              "5":"매우 높음 +40%"
           }
           
           const map = {
-              "Conquete 2x3 Gangjin":"Mud Fight",
-              "Conquete 2x3 Hwaseong":"Nuclear Winter",
-              "Conquete 3x3 Muju":"Plunjing Valley",
-              "Conquete 2x3 Tohoku Alt":"Paddy Field",
-              "Conquete 3x3 Muju Alt":"Punchbowl",
-              "Conquete 3x3 Marine 3 Reduite Terrestre":"Hell in a very small place",
-              "Conquete 3x3 Highway Small":"Highway to Seoul"
+              "Conquete 2x3 Gangjin":"진흙탕 싸움",
+              "Conquete 2x3 Hwaseong":"핵 겨울",
+              "Conquete 3x3 Muju":"푸른징 계곡",
+              "Conquete 2x3 Tohoku Alt":"논밭",
+              "Conquete 3x3 Muju Alt":"펀치볼",
+              "Conquete 3x3 Marine 3 Reduite Terrestre":"한 평의 지옥",
+              "Conquete 3x3 Highway Small":"1번 국도"
           }
           if(map.hasOwnProperty(json.game.Map))
               json.game.Map = map[json.game.Map];
@@ -220,34 +220,86 @@ module.exports.botcommands = (client, admin) => {
           if(Object.values(json)[3] !== undefined || Object.values(json)[2] == undefined) {
               return;
           }
+          
+
+          let user2;
+          if(Object.values(json)[2] !== undefined) {
+          user2 = Object.values(json)[2];
+          }
+          let u1rank;
+          let u2rank;
+
+          let users = [user1, user2];
+          let userRanks = [u1rank, u2rank];
+          
+          for (let i = 0; i < users.length; i++){
+            if (users[i].PlayerElo <= 1500){
+              userRanks[i] = "이등병"
+            } else if (users[i].PlayerElo > 1500 && users[i].PlayerElo <= 1520){
+              userRanks[i] = "상병"
+            }else if (users[i].PlayerElo > 1520 && users[i].PlayerElo <= 1544){
+              userRanks[i] = "병장"
+            }else if (users[i].PlayerElo > 1544 && users[i].PlayerElo <= 1574){
+              userRanks[i] = "원사"
+            }else if (users[i].PlayerElo > 1574 && users[i].PlayerElo <= 1610){
+              userRanks[i] = "소위"
+            }else if (users[i].PlayerElo > 1610 && users[i].PlayerElo <= 1653){
+              userRanks[i] = "중위"
+            }else if (users[i].PlayerElo > 1653 && users[i].PlayerElo <= 1705){
+              userRanks[i] = "대위"
+            }else if (users[i].PlayerElo > 1704 && users[i].PlayerElo <= 1767){
+              userRanks[i] = "소령"
+            }else if (users[i].PlayerElo > 1767 && users[i].PlayerElo <= 1841){
+              userRanks[i] = "중령"
+            }else if (users[i].PlayerElo > 1841 && users[i].PlayerElo <= 1931){
+              userRanks[i] = "대령"
+            }else if (users[i].PlayerElo > 1931 && users[i].PlayerElo <= 2039){
+              userRanks[i] = "준장"
+            }else if (users[i].PlayerElo > 2039 && users[i].PlayerElo <= 2169){
+              userRanks[i] = "소장"
+            }
+            else if (users[i].PlayerElo > 2169 && users[i].PlayerRank <= 3){
+              userRanks[i] = "대장"
+            }
+            else if (users[i].PlayerElo > 2169 && users[i].PlayerRank == 1){
+              userRanks[i] = "원수"
+            }
+          }
+          console.log("Analyzing a replay....");
 
           let embed = new Discord.RichEmbed()
               .setTitle(json.game.ServerName)
               .setDescription(
-               '\n **Map**: ' + json.game.Map + 
-               '\n **Starting Points**: ' + json.game.InitMoney +
-               '\n **Winning Points**: ' + json.game.ScoreLimit +
-               '\n **Game Duration**: ' + (json.game.TimeLimit / 60 + 'm') +
-               '\n **Income Rate**: ' + json.game.IncomeRate)
-              .setColor('ORANGE')
-              .addField(user1.PlayerName, ' **Level**: ' + user1.PlayerLevel + 
-              '\n **Elo / Rank**: ' + user1.PlayerElo + ' | ' + user1.PlayerRank +
-              '\n **Deck**: ' + deck.decode(user1.PlayerDeckContent) + 
-              '\n **Deck Code**: ' + user1.PlayerDeckContent + 
-              '\n **Deck Name**: ' + user1.PlayerDeckName +
-              '\n **Team**: ' + (user1.PlayerAlliance - - 1), true);
-              if(Object.values(json)[2] !== undefined) {
-                  let user2 = Object.values(json)[2];
-                  embed.addField(user2.PlayerName, ' **Level**: ' + user2.PlayerLevel + 
-                      '\n **Elo / Rank**: ' + Math.round(user2.PlayerElo) + ' | ' + user2.PlayerRank +
-                      '\n **Deck**: ' + deck.decode(user2.PlayerDeckContent) + 
-                      '\n **Deck Code**: ' + user2.PlayerDeckContent + 
-                      '\n **Deck Name**: ' + user2.PlayerDeckName +
-                      '\n **Team**: ' + (user2.PlayerAlliance - - 1), true);
-              }
-              message.channel.send(embed);
+               '\n **맵**: ' + json.game.Map + 
+               '\n **시작 포인트**: ' + json.game.InitMoney +
+               '\n **승리 점수**: ' + json.game.ScoreLimit +
+               '\n **경기 시간**: ' + (json.game.TimeLimit / 60 + '분') +
+               '\n **포인트 증가 속도**: ' + json.game.IncomeRate)
+              .setColor('GOLD')
+              .addField(user1.PlayerName, ' **레벨**: ' + user1.PlayerLevel + 
+              '\n **랭크 점수 | 순위**: ' + Math.round(user1.PlayerElo) + ' | ' + userRanks[0] +
+              '\n **덱**: ' + deck.decode(user1.PlayerDeckContent)[0] + 
+              '\n **덱 코드**: ' + user1.PlayerDeckContent + 
+              '\n **덱 이름**: ' + user1.PlayerDeckName +
+              '\n **팀**: ' + (user1.PlayerAlliance - - 1), true);
+              
+             
+          // let user2 = Object.values(json)[2];
+          embed.addField(user2.PlayerName, ' **레벨**: ' + user2.PlayerLevel + 
+              '\n **랭크 점수 | 순위**: ' + Math.round(user2.PlayerElo) + ' | ' + userRanks[1] +
+              '\n **덱**: ' + deck.decode(user2.PlayerDeckContent)[0] + 
+              '\n **덱 코드**: ' + user2.PlayerDeckContent + 
+              '\n **덱 이름**: ' + user2.PlayerDeckName +
+              '\n **팀**: ' + (user2.PlayerAlliance - - 1), true);
+
+                     
+            message.channel.send(embed);
+
+              
               
          
       })
       .then(type => { /* ... */ });
+
+     
   }
