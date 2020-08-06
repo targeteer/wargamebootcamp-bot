@@ -5,7 +5,7 @@ const prefix = '!';
 const commands = require('./ArmoryCommands.js');
 const commonCommands = require('./Commands.js');
 // const token = process.env.token;
-const token = "NzA3NTAzMDc2MjczMDI5MTYx.XrJvqw.rpfcMqAVFnGRnJgIl-39yRlJFyI"
+const token = "NzA3NTAzMDc2MjczMDI5MTYx.XrUdeQ.Xh2UGKhmlNFSIQWHo2pFvINKABw"
 const format = require('./Formatting.js');
 const fs = require('fs');
 const Q = require('q');
@@ -51,6 +51,8 @@ const Streaming = require("discord-streaming");
 
   var filter = ["뉴비"];
 
+  var spam_list = [];
+  var spam_list_info = [];
 
 client.once('ready', () => {
   console.log('Bot running in the index file.');
@@ -64,10 +66,10 @@ client.once('ready', () => {
 });
 
  
-Streaming(client, {
-  live :  "라이브 가능"
-  // ,required : "undefined" // optional parameter, only use if you want to take action on people of a specific role
-});
+// Streaming(client, {
+//   live :  "라이브 가능"
+//   // ,required : "undefined" // optional parameter, only use if you want to take action on people of a specific role
+// });
 
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;
@@ -327,6 +329,7 @@ client.on('message', async message => {
       commonCommands.adminhelp(args, message);
       break;
 
+
   }
 
   //디코방 역할 계급순 - 병사, 원사, 위관, 영관, 장성
@@ -342,7 +345,7 @@ client.on('message', async message => {
           message.reply(axioms[lotto]);
           break;
         } else if (message.member.roles.has('707534156351013015')) {
-          message.member.removeRole('707534156351013015');ㄴ
+          message.member.removeRole('707534156351013015');
           message.reply('신병 계급 삭제 중...');
           break;
         } 
@@ -494,8 +497,9 @@ client.on('message', async message => {
         }
         break;
         
-      case '큐':
+      case '랭':
         
+      
         if (!message.member.roles.has('707528572872556544')) {
           message.member.addRole('707528572872556544');
           message.reply('님께서 게임을 찾는 중...');
@@ -506,95 +510,95 @@ client.on('message', async message => {
         message.channel.send(`현재 ${membersWithRole.size}명이 게임 상대를 찾고 있습니다.`);
         
         
-        let player_rec = "계급이 없으셔서 추천 상대를 못 찾겠네요...어서 명령어 '!신병'으로 입대하세요!";
-        var ranks = ["707534156351013015","707534154652188673","707534152542584942", "707534233890979902","707534233240862721"];  
-        var playablerank = [];
+        // let player_rec = "계급이 없으셔서 추천 상대를 못 찾겠네요...어서 명령어 '!신병'으로 입대하세요!";
+        // var ranks = ["707534156351013015","707534154652188673","707534152542584942", "707534233890979902","707534233240862721"];  
+        // var playablerank = [];
 
-        // message.channel.send("DK가 일을 안해서 추천을 못해주겠네요");
-        // break;
+        // // message.channel.send("DK가 일을 안해서 추천을 못해주겠네요");
+        // // break;
 
-        //게임 찾는 플레이어가 병사일 경우
-        // console.log(message.member.roles.has(ranks[0])
-        if (message.roles.has(ranks[0])){
-          playablerank = ranks.slice(0,2);
-          console.log(playablerank);
+        // //게임 찾는 플레이어가 병사일 경우
+        // // console.log(message.member.roles.has(ranks[0])
+        // if (message.roles.has(ranks[0])){
+        //   playablerank = ranks.slice(0,2);
+        //   console.log(playablerank);
 
         
-          // let rec1 = message.member.roles.get(playablerank[0]);
-          // console.log(rec1);
-          // let rec2 = client.users.get(playablerank[1]);
-          // console.log(rec2);
-          // let rec3 = rec1 + rec2;
+        //   // let rec1 = message.member.roles.get(playablerank[0]);
+        //   // console.log(rec1);
+        //   // let rec2 = client.users.get(playablerank[1]);
+        //   // console.log(rec2);
+        //   // let rec3 = rec1 + rec2;
 
-          // console.log(rec3);
+        //   // console.log(rec3);
           
-          if(member.roles.cache.has(playablerank[0])){
-            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
-            console.log(message.member.roles);
-          } else {
-            player_rec = "추천할 만한 플레이어들이 없네요. 근데 그냥 실력부터 먼저 올리시는게...";
-          }
-        }
+        //   if(member.roles.cache.has(playablerank[0])){
+        //     player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+        //     console.log(message.member.roles);
+        //   } else {
+        //     player_rec = "추천할 만한 플레이어들이 없네요. 근데 그냥 실력부터 먼저 올리시는게...";
+        //   }
+        // }
 
-        //게임 찾는 플레이어가 부사관일 경우
-        if (message.member.roles.has(ranks[1])){
+        // //게임 찾는 플레이어가 부사관일 경우
+        // if (message.member.roles.has(ranks[1])){
 
-          playablerank = ranks.slice(1,4);
-          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+        //   playablerank = ranks.slice(1,4);
+        //   const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
 
-          if(hasplayablerank){
-            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
-            console.log(message.member.roles);
-          } else {
-            player_rec = "추천할 만한 병사/부사관/영관 플레이어들이 없네요.";
-          }
+        //   if(hasplayablerank){
+        //     player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+        //     console.log(message.member.roles);
+        //   } else {
+        //     player_rec = "추천할 만한 병사/부사관/영관 플레이어들이 없네요.";
+        //   }
 
-        }
+        // }
 
-        //게임 찾는 플레이어가 위관일 경우
-        if (message.member.roles.has(ranks[2])){
+        // //게임 찾는 플레이어가 위관일 경우
+        // if (message.member.roles.has(ranks[2])){
 
 
-          playablerank = ranks.slice(2,5);
-          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+        //   playablerank = ranks.slice(2,5);
+        //   const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
 
-          if(hasplayablerank){
-            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
-            console.log(message.member.roles);
-          } else {
-            player_rec = "추천할 만한 부사관/위관/영관 플레이어들이 없네요.";
-          }
+        //   if(hasplayablerank){
+        //     player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+        //     console.log(message.member.roles);
+        //   } else {
+        //     player_rec = "추천할 만한 부사관/위관/영관 플레이어들이 없네요.";
+        //   }
 
-        }
+        // }
 
-        //게임 찾는 플레이어가 영관일 경우
-        if (message.member.roles.has(ranks[3])){
-          playablerank = ranks.slice(3,6);
-          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+        // //게임 찾는 플레이어가 영관일 경우
+        // if (message.member.roles.has(ranks[3])){
+        //   playablerank = ranks.slice(3,6);
+        //   const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
 
-          if(hasplayablerank){
-            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
-            console.log(message.member.roles);
-          } else {
-            player_rec = "추천할 만한 위관/영관/장성 플레이어들이 없네요.";
-          }
-        }
+        //   if(hasplayablerank){
+        //     player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+        //     console.log(message.member.roles);
+        //   } else {
+        //     player_rec = "추천할 만한 위관/영관/장성 플레이어들이 없네요.";
+        //   }
+        // }
 
-        //게임 찾는 플레이어가 장성일 경우
-        if (message.member.roles.has(ranks[4])){
+        // //게임 찾는 플레이어가 장성일 경우
+        // if (message.member.roles.has(ranks[4])){
 
-          playablerank = ranks.slice(4,6);
-          const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
+        //   playablerank = ranks.slice(4,6);
+        //   const hasplayablerank = message.member.roles.some(role => playablerank.includes(role.name));
 
-          if(hasplayablerank){
-            player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
-            console.log(message.member.roles);
-          } else {
-            player_rec = "여기 다 못하는 사람들 밖에 없어서 추천을 못하겠네요.";
-          }
-        }
+        //   if(hasplayablerank){
+        //     player_rec = member.roles.values().value + "님, 저랑 실력 비슷하신거 같은데 한 판 하실?";
+        //     console.log(message.member.roles);
+        //   } else {
+        //     player_rec = "여기 다 못하는 사람들 밖에 없어서 추천을 못하겠네요.";
+        //   }
+        // }
     
-        message.channel.send(player_rec);
+        // message.channel.send(player_rec);
       }
 
         if (message.member.roles.has('707528572872556544')) {
@@ -603,6 +607,19 @@ client.on('message', async message => {
         }
 
         
+        break;
+
+      case 'spam':
+        var allArgs = '';
+        for (let i = 0; i < args.length; i++) { //adds up all arguements after !git or !get into one single string named allArgs
+          allArgs += args[i].toLowerCase() + ' ';
+        }
+
+        break;
+
+        case '병신':
+        message.reply("너가 병신인건 나도 알아");
+
         break;
 
       case '돌림판':
